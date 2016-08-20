@@ -16,7 +16,7 @@ python2.7 /path/to/run_emulation.py <razorpay_key_id> <no_of_records> <min_amoun
 Requirements
 ------------
 
-Python2.7 | Firefox (latest version) | [Selenium Python Bindings][1]
+Python2.7 | Firefox (latest version) | Selenium Python Bindings (http://selenium-python.readthedocs.io/installation.html)
 
 Working and Limitations
 -----------------------
@@ -30,5 +30,3 @@ Issues
 ------
 
 Please raise an issue and/or send me an email at vinay@askvinay.com
-
-[1] http://selenium-python.readthedocs.io/installation.html

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+
+        <title>Razorpay test data generator</title>
+
+        <!-- Styles -->
+        <style type="text/css">
+            @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800,300italic,400italic,600italic);
+            @import url(https://fonts.googleapis.com/css?family=Roboto);
+            html{margin:0;padding:0;height:100%;width:100%;}
+            body{font-family:'Open Sans','Roboto';font-size:12pt;background-color:#000000;color:#00ff00;text-align:center;}
+            .container{width:90%;margin-left:auto;margin-right:auto;text-align:left;}
+            .error_msg{color:#ff0000;}
+        </style>
+
+        <!-- JS -->
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            function run(){
+                var rzp_key_id = document.getElementById('rzp_key_id').value;
+                var amount = document.getElementById('amount').value;
+
+                var options = {
+                    "key": rzp_key_id,
+                    "amount": amount, // 2000 paise = INR 20
+                    "name": "Int Data Labs",
+                    "handler": function (response){
+                        console.log(response.razorpay_payment_id);
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            }
+        </script>
+
+    </head>
+    <body>
+        <div class="container">
+            <p>This page is the front for the python script that generates a set number of payment records for your Razorpay account. You can also use this page for manually entering records. Recommended to be used (tested too) only in test mode.</p>
+            <table>
+                <tr>
+                    <td>Number of records to generate: </td>
+                    <td><input type="number" name="no_of_records" id="no_of_records" value="10" min="1" max="99999"></td>
+                    <td class="error_msg" id="no_of_records_error"></td>
+                </tr>
+                <tr>
+                    <td>Your KEY_ID (Ex: rzp_test_XXXXXXXXX): </td>
+                    <td><input type="text" name="rzp_key_id" id="rzp_key_id"></td>
+                    <td class="error_msg" id="rzp_key_id_error"></td>
+                </tr>
+                <tr>
+                    <td>Payment amount range in INR: </td>
+                    <td><input type="number" name="amt_range_start" id="amt_range_start" value="10" min="1" max="9999999"> to <input type="number" name="amt_range_end" id="amt_range_end" value="1000" min="1" max="9999999"></td>
+                    <td class="error_msg" id="amt_range_error"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Amount: <input type="number" name="amount" id="amount"></td>
+                    <td><input type="button" id="generate" value="Generate Record" onclick="javascript:run();"></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

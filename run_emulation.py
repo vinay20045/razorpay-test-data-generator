@@ -142,8 +142,9 @@ if __name__ == "__main__":
         ele.click()
 
         #print 'switch to the last of the windows'
-        x = 1
+        x = 0
         while x < 5:
+            time.sleep(1 * x)
             try:
                 driver.switch_to_window(driver.window_handles[1])
                 driver.implicitly_wait(10)

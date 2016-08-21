@@ -24,6 +24,7 @@
 import sys
 import os
 import random
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -71,6 +72,8 @@ if __name__ == "__main__":
 
     #open page
     driver = webdriver.Firefox()
+    driver.implicitly_wait(10)
+
     driver.get('file://' + html_file)
 
     #write the info
@@ -94,21 +97,22 @@ if __name__ == "__main__":
     #loop to generate as many records necessary
     i = 1
     while i <= no_of_records:
-        #set amount
+        #print 'set amount'
         write(
             driver.find_element_by_id('amount'),
             random.randint(min_amount,max_amount) * 100
         )
 
-        #click button
+        #print 'click button'
         ele = driver.find_element_by_id('generate')
         ele.click()
 
-        #switch to payment frame
+        #print 'switch to payment frame'
         payment_frame = driver.find_element_by_tag_name('iframe')
         driver.switch_to_frame(payment_frame)
+        driver.implicitly_wait(10)
         
-        #fill in customer details
+        #print 'fill in customer details'
         customer = get_details()
         write(
             driver.find_element_by_id('contact'),
@@ -119,32 +123,38 @@ if __name__ == "__main__":
             customer['email']
         )
 
-        #select netbanking - as it seems to be the easiest to continue with
+        #print 'select netbanking - as it seems to be the easiest to continue with'
         ele = driver.find_element_by_xpath("//div[@tab='netbanking']")
         ele.click()
 
-        #select hdfc bank
+        #print 'select hdfc bank'
         ele = driver.find_element_by_xpath("//label[@for='bank-radio-HDFC']")
         ele.click()
 
-        #click pay
-        ele = driver.find_element_by_xpath("//button[@type='submit']")
+        #print 'click pay'
+        ele = driver.find_element_by_xpath("//button[@id='footer']")
         ele.click()
 
-        #switch to the last of the windows
-        for handle in driver.window_handles:
-            driver.switch_to_window(handle)
+        #print 'switch to the last of the windows'
+        x = 1
+        while x < 5:
+            try:
+                driver.switch_to_window(driver.window_handles[1])
+                driver.implicitly_wait(10)
+                break
+            except:
+                #print 'try clicking pay again'
+                ele = driver.find_element_by_xpath("//button[@id='footer']")
+                ele.click()
+            x = x + 1
 
-        #just in case as it is loading in a couple of secs on slow conn
-        driver.implicitly_wait(10)
-
-        #click success
+        #print 'click success'
         ele = driver.find_element_by_xpath("//input[@data-value='S']")
         ele.click()
 
-        #switch back to the first of windows
-        for handle in driver.window_handles:
-            driver.switch_to_window(handle)
-            break
+        #print 'switch back to the first of windows'
+        driver.switch_to_window(driver.window_handles[0])
+        driver.implicitly_wait(10)
 
         i = i + 1
+        time.sleep(1)

@@ -103,6 +103,12 @@ if __name__ == "__main__":
             random.randint(min_amount,max_amount) * 100
         )
 
+        #print 'set remaining records'
+        write(
+            driver.find_element_by_id('no_of_records'),
+            no_of_records - i
+        )
+
         #print 'click button'
         ele = driver.find_element_by_id('generate')
         ele.click()

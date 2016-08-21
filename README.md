@@ -10,8 +10,8 @@ python2.7 /path/to/run_emulation.py <razorpay_key_id> <no_of_records> <min_amoun
 ```
 `razorpay_key_id` --> Required. Available in your razorpay dashboard   
 `no_of_records` --> Optional. # of records to generate. Default is 1   
-`min_amount` --> Optional. Minimum amount in paise. Default is 1000   
-`max_amount` --> Optional. Maximum amount in paise. Default is 9999
+`min_amount` --> Optional. Minimum amount in rupees. Default is 1000
+`max_amount` --> Optional. Maximum amount in rupees. Default is 9999
 
 Requirements
 ------------
